@@ -34,6 +34,7 @@ public class AFD {
             if (leer.hasNextLine()) {
                 String[] textoFinal = leer.nextLine().split(",");
                 this.estadosFinales = new int[textoFinal.length];
+
                 for (int i=0; i < textoFinal.length; i++){
                     this.estadosFinales[i] = Integer.parseInt(textoFinal[i].trim());
 
@@ -44,6 +45,7 @@ public class AFD {
 
                 if (leer.hasNextLine()) {
                     String[] fila = leer.nextLine().split(",");
+
                     for (int j=0; j < this.alfabeto.length; j++){
                         this.matrizTransicion[i][j] = Integer.parseInt(fila[j].trim());
                     }
@@ -67,7 +69,7 @@ public class AFD {
                 
             int columna = -1;
             for (int j = 0; j < alfabeto.length; j++) {
-                
+
                 if (alfabeto[j].trim().equals(letra)) {
                     columna = j;
                     break;
@@ -76,13 +78,15 @@ public class AFD {
 
             if (columna == -1) 
                 return false; 
-                estadoActual = matrizTransicion[estadoActual][columna];
-        }
-
+        
+            
+            estadoActual = matrizTransicion[estadoActual][columna];
+            }
 
         for (int f : estadosFinales) {
-            if (estadoActual == f)
+            if (estadoActual == f){
                 return true;
+            }
             
         }
         
@@ -114,6 +118,4 @@ public class AFD {
     }
 
     // Implemente los metodos que desee a partir de aqui
-
-    
 }
