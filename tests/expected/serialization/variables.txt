@@ -1,0 +1,1 @@
+Alphabet: [a, b, 0, 1], Final States: [1], Error States: [], Minimum: true
