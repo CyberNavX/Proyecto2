@@ -10,7 +10,7 @@ public class AFD {
 
     private String[] alfabeto;
     private int cantidadEstados;
-    private int estadosFinales;
+    private int[] estadosFinales;
     private int[][] matrizTransicion;
 
     private static final String stringFormat = "Alphabet: %s, Final States: %s, Error States: %s, Minimum: %b";
@@ -29,6 +29,8 @@ public class AFD {
                 this.cantidadEstados = Integer.parseInt(leer.nextLine().trim());
             }
 
+            this.matrizTransicion = new int[this.cantidadEstados][this.alfabeto.length];
+
             if (leer.hasNextLine()) {
                 String[] textoFinal = leer.nextLine().split(",");
                 this.estadosFinales = new int[textoFinal.length];
@@ -39,6 +41,7 @@ public class AFD {
             }
 
             for (int i=0; i< this.cantidadEstados; i++){
+
                 if (leer.hasNextLine()) {
                     String[] fila = leer.nextLine().split(",");
                     for (int j=0; j < this.alfabeto.length; j++){
@@ -57,8 +60,33 @@ public class AFD {
 
     public boolean accept(String str) {
         // Revisa si la cuerda str es aceptada o no por el AFD
-        return false;
+        int estadoActual = 0;
+
+        for (int i = 0; i < str.length(); i++) {
+                char caracter = str.charAt(i);
+                String letra = String.valueOf(caracter);
+                
+                int columna = -1;
+                for (int j = 0; j < alfabeto.length; j++) {
+
+                    if (alfabeto[j].equals(letra)) {
+                        columna = j;
+                        break;
+
+                    }
+                }
+        
+        estadoActual = matrizTransicion[estadoActual][columna];
     }
+
+    for (int f : estadosFinales) {
+        if (estadoActual == f){
+            return true;
+        }
+    }
+    return false;
+    }
+
 
     public boolean isMin() {
         // Devuelve true si este AFD esta en su forma minima. Falso de lo contrario
@@ -73,16 +101,18 @@ public class AFD {
     }
 
     private String[] getAlphabet() {
-        return new String[0];
+        return this.alfabeto;
     }
 
     private int[] getFinalStates() {
-        return new int[0];
+        return this.estadosFinales;
     }
 
     private int[] getErrorStates() {
-        return new int[0];
+        return new int[]{};
     }
 
     // Implemente los metodos que desee a partir de aqui
+
+    
 }
