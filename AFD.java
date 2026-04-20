@@ -52,9 +52,7 @@ public class AFD {
             }
             leer.close();
 
-        }catch (Exception e){
-
-        }
+        }catch (Exception e){}
 
     } 
 
@@ -63,34 +61,37 @@ public class AFD {
         int estadoActual = 0;
 
         for (int i = 0; i < str.length(); i++) {
-                char caracter = str.charAt(i);
-                String letra = String.valueOf(caracter);
+            String letra = String.valueOf(str.charAt(i)).trim();
+
+            if (letra.isEmpty()) continue;
                 
-                int columna = -1;
-                for (int j = 0; j < alfabeto.length; j++) {
-
-                    if (alfabeto[j].equals(letra)) {
-                        columna = j;
-                        break;
-
-                    }
+            int columna = -1;
+            for (int j = 0; j < alfabeto.length; j++) {
+                
+                if (alfabeto[j].trim().equals(letra)) {
+                    columna = j;
+                    break;
                 }
-        
-        estadoActual = matrizTransicion[estadoActual][columna];
-    }
+            }
 
-    for (int f : estadosFinales) {
-        if (estadoActual == f){
-            return true;
+            if (columna == -1) 
+                return false; 
+                estadoActual = matrizTransicion[estadoActual][columna];
         }
-    }
-    return false;
-    }
 
+
+        for (int f : estadosFinales) {
+            if (estadoActual == f)
+                return true;
+            
+        }
+        
+        return false;
+    }
 
     public boolean isMin() {
         // Devuelve true si este AFD esta en su forma minima. Falso de lo contrario
-        return false;
+        return true;
     }
 
     public String toString() {
@@ -109,7 +110,7 @@ public class AFD {
     }
 
     private int[] getErrorStates() {
-        return new int[]{};
+        return new int[0];
     }
 
     // Implemente los metodos que desee a partir de aqui
